@@ -4,6 +4,21 @@ Contents:
 
 [[_TOC_]]
 
+
+# 重要信息
+本主站修改自IGH1.6，完成了在6.5.2版本内核下的，r8169，e1000e，igc，igb实时网卡
+驱动的支持，目前已知一个BUG，r8169网卡在拔网线后，无法自动重连从站，不拔网线没有问题。
+
+
+# Important Information
+This master station is modified from IGH 1.6 and has completed support for 
+real-time network card drivers, including r8169, e1000e, igc, and igb, 
+on the 6.5.2 kernel version. Currently, a known bug exists: the r8169 network card 
+cannot automatically reconnect to the slave after the network cable is unplugged. 
+However, it works fine without unplugging the cable.
+
+
+
 # General Information
 
 This is an open-source EtherCAT master implementation for Linux 2.6 or newer.
