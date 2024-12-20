@@ -1,0 +1,3 @@
+
+
+./configure --with-linux-dir=/home/chang/桌面/defaultrt/linux-6.5.2 --enable-generic=yes --enable-r8169=yes --enable-igc=yes --enable-igb=yes  --enable-e1000e=yes --enable-eoe=no

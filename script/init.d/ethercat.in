@@ -1,0 +1,131 @@
+#!/bin/sh
+
+#------------------------------------------------------------------------------
+#
+#  Init script for EtherCAT
+#
+#  $Id$
+#
+#  Copyright (C) 2006-2021  Florian Pose, Ingenieurgemeinschaft IgH
+#
+#  This file is part of the IgH EtherCAT Master.
+#
+#  The IgH EtherCAT Master is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU General Public License version 2, as
+#  published by the Free Software Foundation.
+#
+#  The IgH EtherCAT Master is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+#  Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License along
+#  with the IgH EtherCAT Master; if not, write to the Free Software
+#  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#
+#  ---
+#
+#  The license mentioned above concerns the source code only. Using the EtherCAT
+#  technology and brand is only permitted in compliance with the industrial
+#  property and similar rights of Beckhoff Automation GmbH.
+#
+#  vim: expandtab
+#
+#------------------------------------------------------------------------------
+
+### BEGIN INIT INFO
+# Provides:          ethercat
+# Required-Start:    $local_fs $syslog $network
+# Should-Start:      $time ntp
+# Required-Stop:     $local_fs $syslog $network
+# Should-Stop:       $time ntp
+# Default-Start:     3 5
+# Default-Stop:      0 1 2 6
+# Short-Description: EtherCAT master
+# Description:       EtherCAT master @VERSION@
+### END INIT INFO
+
+#------------------------------------------------------------------------------
+
+ETHERCATCTL="@sbindir@/ethercatctl -c @sysconfdir@/sysconfig/ethercat"
+
+#------------------------------------------------------------------------------
+
+exit_success() {
+    if [ -r /etc/rc.status ]; then
+        rc_reset
+        rc_status -v
+        rc_exit
+    else
+        echo " done"
+        exit 0
+    fi
+}
+
+#------------------------------------------------------------------------------
+
+exit_fail() {
+    if [ -r /etc/rc.status ]; then
+        rc_failed
+        rc_status -v
+        rc_exit
+    else
+        echo " failed"
+        exit 1
+    fi
+}
+
+#------------------------------------------------------------------------------
+
+if [ -r /etc/rc.status ]; then
+    . /etc/rc.status
+    rc_reset
+fi
+
+case "${1}" in
+
+start)
+    echo -n "Starting EtherCAT master @VERSION@ "
+
+    if $ETHERCATCTL start; then
+        exit_success
+    else
+        exit_fail
+    fi
+    ;;
+
+stop)
+    echo -n "Shutting down EtherCAT master @VERSION@ "
+
+    if $ETHERCATCTL stop; then
+        exit_success
+    else
+        exit_fail
+    fi
+    ;;
+
+restart)
+    $0 stop || exit 1
+    sleep 1
+    $0 start
+    exit
+    ;;
+
+status)
+    $ETHERCATCTL status
+    exit $?
+    ;;
+
+*)
+    echo "USAGE: $0 {start|stop|restart|status}"
+    ;;
+
+esac
+
+if [ -r /etc/rc.status ]; then
+    rc_exit
+else
+    exit 1
+fi
+
+#------------------------------------------------------------------------------
