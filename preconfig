@@ -1,0 +1,3 @@
+
+
+./configure --with-linux-dir=/media/root/be09b5c6-58d7-4f22-9c9a-34bf0f750bef/home/chang/linux6.13/linux-6.13-rc4/ --enable-generic=yes --enable-r8169=yes --enable-igc=yes --enable-igb=yes  --enable-e1000e=yes --enable-eoe=no

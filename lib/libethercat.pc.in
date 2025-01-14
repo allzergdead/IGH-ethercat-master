@@ -1,0 +1,40 @@
+#
+#  pkgconfig file for ethercat library
+#
+#  Copyright 2021 Bjarne von Horn (vh at igh dot de)
+#
+#  This file is part of the ethercat library.
+#
+#  The ethercat library is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU Lesser General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or (at your
+#  option) any later version.
+#
+#  The ethercat library is distributed in the hope that it will be useful, but
+#  WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+#  or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+#  License for more details.
+#
+#  You should have received a copy of the GNU Lesser General Public License
+#  along with the ethercat library. If not, see <http://www.gnu.org/licenses/>.
+#
+#  ---
+#
+#  The license mentioned above concerns the source code only. Using the
+#  EtherCAT technology and brand is only permitted in compliance with the
+#  industrial property and similar rights of Beckhoff Automation GmbH.
+#
+#  vim: tw=78 noexpandtab
+#
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libethercat
+Description: Client support library for the EtherCAT Master
+URL: http://www.etherlab.org
+Version: @VERSION@
+Libs:  -L${libdir} -lethercat
+Cflags: -I${includedir}

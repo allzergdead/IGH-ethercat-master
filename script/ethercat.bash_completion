@@ -1,0 +1,86 @@
+#  Copyright (C) 2022 Bjarne von Horn, Ingenieurgemeinschaft IgH
+#
+#  This file is part of the IgH EtherCAT master userspace library.
+#
+#  The IgH EtherCAT master userspace library is free software; you can
+#  redistribute it and/or modify it under the terms of the GNU Lesser General
+#  Public License as published by the Free Software Foundation; version 2.1
+#  of the License.
+#
+#  The IgH EtherCAT master userspace library is distributed in the hope that
+#  it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+#  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU Lesser General Public License for more details.
+#
+#  You should have received a copy of the GNU Lesser General Public License
+#  along with the IgH EtherCAT master userspace library. If not, see
+#  <http://www.gnu.org/licenses/>.
+#
+#  ---
+#
+#  The license mentioned above concerns the source code only. Using the
+#  EtherCAT technology and brand is only permitted in compliance with the
+#  industrial property and similar rights of Beckhoff Automation GmbH.
+
+
+_ethercat_completions()
+{
+    local ethercat_commands="alias config crc cstruct data debug domains download eoe foe_read foe_write graph master pdos reg_read reg_write rescan sdos sii_read sii_write slaves soe_read soe_write states upload version xml"
+    local options="--help --force --quiet --verbose --master "
+    if [ "$COMP_CWORD" -eq 1 ] ; then
+        COMPREPLY=($(compgen -W "$ethercat_commands --help" -- "${COMP_WORDS[1]}"))
+    elif [[ "${COMP_WORDS[1]}" != "--help" && ! "${COMP_WORDS[COMP_CWORD-1]}" =~ ^-a|-p|--alias|--position$ ]] ; then
+        case "${COMP_WORDS[1]}" in
+        "alias" | "config" | "cstruct" | "slaves" | "sdos" | "sii_read" | "upload" | "xml")
+            options+="--alias --position"
+            ;;
+        "crc")
+            options+="reset"
+            ;;
+        "debug")
+            options+="0 1 2"
+            ;;
+        "domains")
+            options+="--domain"
+            ;;
+        "download" | "reg_read" | "soe_read" | "soe_write")
+            if [[ "${COMP_WORDS[COMP_CWORD-1]}" =~ ^-t|--type$ ]] ; then
+                options="bool int8 int16 int32 int64 uint8 uint16 uint32 uint64 float double string octet_string unicode_string sm8 sm16 sm32 sm64"
+            else
+                options+="--alias --position --type"
+            fi
+            ;;
+        "foe_read" | "foe_write")
+            if [[  "${COMP_WORDS[COMP_CWORD-1]}" =~ ^-o|--output-file$ ]] ; then
+                COMPREPLY=($(compgen -o filenames -A file -- "${COMP_WORDS[$COMP_CWORD]}"))
+            else
+                options+="--alias --position --output-file"
+                COMPREPLY=($(compgen -o filenames -A file -W "$options" -- "${COMP_WORDS[$COMP_CWORD]}"))
+            fi
+            return
+            ;;
+        "graph")
+            options+="DC CRC"
+            ;;
+        "pdos")
+            if [[ "${COMP_WORDS[COMP_CWORD-1]}" =~ ^-s|--skin$ ]] ; then
+                options="default etherlab"
+            else
+                options+="--alias --position --skin"
+            fi
+            ;;
+        "sii_write")
+            options+="--alias --position"
+            COMPREPLY=($(compgen -o filenames -A file -W "$options" -- "${COMP_WORDS[$COMP_CWORD]}"))
+            return
+            ;;
+        "states")
+            options+="--alias --position INIT PREOP BOOT SAFEOP OP"
+            ;;
+
+        esac
+        COMPREPLY+=($(compgen -W "$options" -- "${COMP_WORDS[$COMP_CWORD]}"))
+    fi
+}
+
+complete -F _ethercat_completions ethercat

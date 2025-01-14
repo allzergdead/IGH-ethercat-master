@@ -1,0 +1,10 @@
+*.aux
+/external
+*.idx
+*.lof
+*.log
+*.lot
+*.nlo
+*.out
+*.pdf
+*.toc

@@ -1,0 +1,40 @@
+make -C "../linux-6.5.2" M="/home/chang/ethercat-master" INSTALL_MOD_DIR="ethercat" modules
+make[1]: 进入目录“/home/chang/linux-6.5.2”
+  CC [M]  /home/chang/ethercat-master/devices/e1000e/phy-6.5-ethercat.o
+  CC [M]  /home/chang/ethercat-master/devices/e1000e/80003es2lan-6.5-ethercat.o
+  CC [M]  /home/chang/ethercat-master/devices/e1000e/mac-6.5-ethercat.o
+  CC [M]  /home/chang/ethercat-master/devices/e1000e/manage-6.5-ethercat.o
+  CC [M]  /home/chang/ethercat-master/devices/e1000e/nvm-6.5-ethercat.o
+  CC [M]  /home/chang/ethercat-master/devices/e1000e/ptp-6.5-ethercat.o
+  LD [M]  /home/chang/ethercat-master/devices/e1000e/ec_e1000e.o
+  CC [M]  /home/chang/ethercat-master/devices/generic.o
+  LD [M]  /home/chang/ethercat-master/devices/ec_generic.o
+  CC [M]  /home/chang/ethercat-master/devices/r8169-6.5-ethercat.o
+/home/chang/ethercat-master/devices/r8169-6.5-ethercat.c: In function ‘rtl_rx’:
+/home/chang/ethercat-master/devices/r8169-6.5-ethercat.c:6193:48: warning: passing argument 1 of ‘rtl8169_align’ discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+ 6193 |                         rx_buf = rtl8169_align(rx_buf);
+      |                                                ^~~~~~
+/home/chang/ethercat-master/devices/r8169-6.5-ethercat.c:6129:41: note: expected ‘void *’ but argument is of type ‘const void *’
+ 6129 | static inline void *rtl8169_align(void *data)
+      |                                   ~~~~~~^~~~
+/home/chang/ethercat-master/devices/r8169-6.5-ethercat.c: In function ‘ec_poll’:
+/home/chang/ethercat-master/devices/r8169-6.5-ethercat.c:6343:31: warning: unused variable ‘ioaddr’ [-Wunused-variable]
+ 6343 |                 void __iomem *ioaddr = tp->mmio_addr;
+      |                               ^~~~~~
+/home/chang/ethercat-master/devices/r8169-6.5-ethercat.c: In function ‘set_cpus_chang’:
+/home/chang/ethercat-master/devices/r8169-6.5-ethercat.c:242:1: warning: the frame size of 1088 bytes is larger than 1024 bytes [-Wframe-larger-than=]
+  242 | }
+      | ^
+  LD [M]  /home/chang/ethercat-master/devices/ec_r8169.o
+  MODPOST /home/chang/ethercat-master/Module.symvers
+  CC [M]  /home/chang/ethercat-master/examples/mini/ec_mini.mod.o
+  LD [M]  /home/chang/ethercat-master/examples/mini/ec_mini.ko
+  CC [M]  /home/chang/ethercat-master/master/ec_master.mod.o
+  LD [M]  /home/chang/ethercat-master/master/ec_master.ko
+  CC [M]  /home/chang/ethercat-master/devices/ec_generic.mod.o
+  LD [M]  /home/chang/ethercat-master/devices/ec_generic.ko
+  CC [M]  /home/chang/ethercat-master/devices/e1000e/ec_e1000e.mod.o
+  LD [M]  /home/chang/ethercat-master/devices/e1000e/ec_e1000e.ko
+  CC [M]  /home/chang/ethercat-master/devices/ec_r8169.mod.o
+  LD [M]  /home/chang/ethercat-master/devices/ec_r8169.ko
+make[1]: 离开目录“/home/chang/linux-6.5.2”

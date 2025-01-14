@@ -1,0 +1,4 @@
+make -C "../linux-6.5.2" M="/home/chang/ethercat-master" INSTALL_MOD_DIR="ethercat" modules
+make[1]: 进入目录“/home/chang/linux-6.5.2”
+  CC [M]  /home/chang/ethercat-master/devices/e1000e/netdev-6.5-ethercat.o
+make[1]: 离开目录“/home/chang/linux-6.5.2”

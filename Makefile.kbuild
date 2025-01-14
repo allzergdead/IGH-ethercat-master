@@ -1,0 +1,28 @@
+# Shared makefile code providing support for Kbuild make. It is included
+# by every `Makefile.am` that needs Kbuild support with:
+# ```
+# include $(top_srcdir)/Makefile.kbuild
+# ```
+KBUILD = $(MAKE) -C "$(LINUX_SOURCE_DIR)" M="$(abs_srcdir)" INSTALL_MOD_DIR="$(INSTALL_MOD_DIR)"
+
+
+modules:
+	$(KBUILD) modules
+
+modules_install:
+	$(KBUILD) modules_install
+
+
+# Override default `clean` target to call Kbuild clean *before* automake
+# `clean` (see #5 for the rationale).
+clean: kbuild-clean
+	@if test -z "$(SUBDIRS)"; then \
+	  $(MAKE) $(AM_MAKEFLAGS) clean-am ; \
+	else \
+	  $(MAKE) $(AM_MAKEFLAGS) clean-recursive ; \
+	fi
+
+kbuild-clean:
+	$(KBUILD) clean
+
+.PHONY: kbuild-clean
